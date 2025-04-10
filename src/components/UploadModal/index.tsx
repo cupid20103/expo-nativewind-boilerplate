@@ -17,7 +17,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
           className="relative w-full h-full bg-black/75"
           onPress={onClose}
         >
-          <View className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-y-5 px-10 py-5 bg-gray-100 rounded-xl">
+          <View className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-y-5 px-7 py-5 bg-gray-100 rounded-xl">
             <Text className="text-xl font-semibold text-center">
               Upload Photo
             </Text>
