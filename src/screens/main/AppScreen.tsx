@@ -22,7 +22,7 @@ const AppScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [avatarURL, setAvatarURL] = useState<string | undefined>(undefined);
+  const [imageUrl, setImageURL] = useState<string | undefined>(undefined);
   const [result, setResult] = useState<string | undefined>(undefined);
 
   const uploadImage = async (mode: string) => {
@@ -90,7 +90,7 @@ const AppScreen: React.FC = () => {
           throw new Error(data.error);
         }
 
-        setAvatarURL(data.result);
+        setImageURL(data.result);
         setIsReady(true);
       } else {
         const response = await fetch(`${EXPO_PUBLIC_API_URI}/hair`, {
@@ -98,7 +98,7 @@ const AppScreen: React.FC = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ avatarURL, prompt: prompt.trim() }),
+          body: JSON.stringify({ imageUrl, textPrompt: prompt.trim() }),
         });
 
         const data = await response.json();

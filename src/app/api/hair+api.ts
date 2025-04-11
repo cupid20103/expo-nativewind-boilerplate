@@ -1,58 +1,57 @@
-import { EXPO_PUBLIC_REPLICATE_API_TOKEN } from "@/config/env";
+import { EXPO_PUBLIC_LIGHTX_API_KEY } from "@/config/env";
 
 export async function POST(req: Request) {
   try {
-    const { avatarURL, prompt } = await req.json();
+    const { imageUrl, textPrompt } = await req.json();
 
-    const payload = {
-      version:
-        "ddfc2b08d209f9fa8c1eca692712918bd449f695dabb4a958da31802a9570fe4",
-      input: {
-        prompt: `Transform this selfie into a version with ${prompt}. Keep facial features, lighting, and realism intact. Focus on hair changes.`,
-        input_image: avatarURL,
-      },
-    };
+    const generate = await fetch(
+      "https://api.lightxeditor.com/external/api/v1/hairstyle",
+      {
+        method: "POST",
+        headers: {
+          "x-api-key": EXPO_PUBLIC_LIGHTX_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          imageUrl,
+          textPrompt,
+        }),
+      }
+    );
 
-    const response = await fetch("https://api.replicate.com/v1/predictions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${EXPO_PUBLIC_REPLICATE_API_TOKEN}`,
-        Prefer: "wait",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    const order = await generate.json();
+    const orderId = order.body.orderId;
 
-    const prediction = await response.json();
-    const predictionID = prediction.id;
-
-    const MAX_ATTEMPTS = 10;
+    const MAX_ATTEMPTS = 5;
     let attempts = 0;
     let result;
 
     while (attempts < MAX_ATTEMPTS) {
       const statusResponse = await fetch(
-        `https://api.replicate.com/v1/predictions/${predictionID}`,
+        `https://api.lightxeditor.com/external/api/v1/order-status`,
         {
+          method: "POST",
           headers: {
-            Authorization: `Bearer ${EXPO_PUBLIC_REPLICATE_API_TOKEN}`,
+            "x-api-key": EXPO_PUBLIC_LIGHTX_API_KEY,
+            "Content-Type": "application/json",
           },
+          body: JSON.stringify({ orderId }),
         }
       );
 
       result = await statusResponse.json();
 
-      if (result.status === "succeeded" || result.status === "failed") {
+      if (result.body.status === "active" || result.status === "failed") {
         break;
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
 
       attempts++;
     }
 
-    if (result?.output?.[0]) {
-      return new Response(JSON.stringify({ result: result.output[0] }), {
+    if (result.body.output) {
+      return new Response(JSON.stringify({ result: result.body.output }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       });
