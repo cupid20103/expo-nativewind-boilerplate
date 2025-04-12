@@ -22,7 +22,6 @@ const AppScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [imageUrl, setImageURL] = useState<string | undefined>(undefined);
   const [result, setResult] = useState<string | undefined>(undefined);
 
   const uploadImage = async (mode: string) => {
@@ -70,35 +69,18 @@ const AppScreen: React.FC = () => {
       setIsLoading(true);
 
       if (!isReady) {
-        const imageUri = await imageToBase64(selfie);
-
-        const response = await fetch(`${EXPO_PUBLIC_API_URI}/upload`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ imageUri }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to upload image");
-        }
-
-        const data = await response.json();
-
-        if (data.error) {
-          throw new Error(data.error);
-        }
-
-        setImageURL(data.result);
         setIsReady(true);
+
+        return;
       } else {
+        const input_image = await imageToBase64(selfie);
+
         const response = await fetch(`${EXPO_PUBLIC_API_URI}/hair`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ imageUrl, textPrompt: prompt.trim() }),
+          body: JSON.stringify({ input_image, prompt: prompt.trim() }),
         });
 
         const data = await response.json();

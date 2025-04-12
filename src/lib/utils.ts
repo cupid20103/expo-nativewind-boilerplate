@@ -51,7 +51,7 @@ export const imageToBase64 = async (uri: string) => {
       encoding: FileSystem.EncodingType.Base64,
     });
 
-    return `data:image/jpeg;base64,${base64}`;
+    return `data:application/octet-stream;base64,${base64}`;
   } catch (error) {
     console.error("Error converting image to Base64: ", error);
     throw error;
