@@ -35,7 +35,7 @@ const HairStyle: React.FC<HairStyleProps> = ({ title, image }) => {
   return (
     <Pressable
       className="flex-1 h-24 rounded-xl overflow-hidden"
-      onPress={() => {}}
+      onPress={() => console.log(title)}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
     >
@@ -43,7 +43,6 @@ const HairStyle: React.FC<HairStyleProps> = ({ title, image }) => {
         <Image
           className="w-full h-full"
           source={image}
-          placeholder={title}
           contentFit="cover"
           transition={1000}
         />

@@ -16,3 +16,8 @@ export interface HairStyleProps {
   title: string;
   image: ImageRequireSource;
 }
+
+export interface SkeletonImageProps {
+  className?: string;
+  uri?: string;
+}

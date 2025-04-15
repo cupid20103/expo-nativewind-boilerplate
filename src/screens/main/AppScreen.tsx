@@ -5,13 +5,15 @@ import {
   ScrollView,
   Text,
   TextInput,
+  useColorScheme,
   View,
 } from "react-native";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
+import { LinearGradient } from "expo-linear-gradient";
 import { fetch } from "expo/fetch";
 import Feather from "@expo/vector-icons/Feather";
-import { HairStyle, UploadModal } from "@/components";
+import { HairStyle, SkeletonImage, UploadModal } from "@/components";
 import { hairStyleData } from "@/lib/constant";
 import { cn, imageToBase64, isEmpty, toast } from "@/lib/utils";
 import { EXPO_PUBLIC_API_URI } from "@/config/env";
@@ -23,6 +25,10 @@ const AppScreen: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<string | undefined>(undefined);
+
+  const colorScheme = useColorScheme();
+
+  const isDarkMode = colorScheme === "dark";
 
   const uploadImage = async (mode: string) => {
     try {
@@ -56,14 +62,18 @@ const AppScreen: React.FC = () => {
 
       setModalVisible(false);
     } catch (error) {
-      toast({ message: "Failed to pick image" });
+      toast({ message: "Failed to pick image." });
 
       console.error(error);
     }
   };
 
   const handleImage = async () => {
-    if (!selfie) return;
+    if (isEmpty(selfie) || prompt.trim().length == 0 || isLoading) {
+      toast({ message: "Please upload an image and enter a prompt." });
+
+      return;
+    }
 
     try {
       setIsLoading(true);
@@ -73,7 +83,7 @@ const AppScreen: React.FC = () => {
 
         return;
       } else {
-        const input_image = await imageToBase64(selfie);
+        const input_image = selfie && (await imageToBase64(selfie));
 
         const response = await fetch(`${EXPO_PUBLIC_API_URI}/hair`, {
           method: "POST",
@@ -92,7 +102,7 @@ const AppScreen: React.FC = () => {
         setResult(data.result);
       }
     } catch (error) {
-      toast({ message: "Failed to process image" });
+      toast({ message: "Failed to process image." });
 
       console.log(error);
     } finally {
@@ -111,7 +121,7 @@ const AppScreen: React.FC = () => {
         <View className="flex flex-col gap-y-5">
           {!isReady ? (
             <View className="flex flex-col gap-y-3">
-              <Text className="text-4xl font-bold text-center">
+              <Text className="text-4xl font-bold text-center dark:text-white">
                 Try a Stunning {"\n"} New Look with {"\n"} AI Hair Magic
               </Text>
               <Text className="text-base text-gray-500 text-center">
@@ -121,19 +131,23 @@ const AppScreen: React.FC = () => {
             </View>
           ) : (
             <Pressable onPress={handleClear}>
-              <Feather name="arrow-left" size={24} color="black" />
+              {!isDarkMode ? (
+                <Feather name="arrow-left" size={24} color="black" />
+              ) : (
+                <Feather name="arrow-left" size={24} color="white" />
+              )}
             </Pressable>
           )}
           {!isEmpty(result) && (
-            <Text className="text-4xl font-bold text-center">
+            <Text className="text-4xl font-bold text-center dark:text-white">
               Here's Your {"\n"} New Look
             </Text>
           )}
           <View className="flex flex-col gap-y-5">
             <Pressable
               className={cn(
-                "w-full bg-white rounded-xl overflow-hidden",
-                isReady ? "h-96" : "h-64",
+                "w-full rounded-xl overflow-hidden",
+                isReady ? "h-96" : "bg-white h-64",
                 isEmpty(selfie) && "border-2 border-gray-300 border-dashed"
               )}
               onPress={() => setModalVisible(true)}
@@ -162,11 +176,7 @@ const AppScreen: React.FC = () => {
                   )}
                 </>
               ) : (
-                <Image
-                  className="w-full h-full"
-                  source={{ uri: result }}
-                  contentFit="cover"
-                />
+                <SkeletonImage className="w-full h-full" uri={result} />
               )}
             </Pressable>
             {!isEmpty(result) && (
@@ -186,10 +196,9 @@ const AppScreen: React.FC = () => {
                     <Text className="text-base font-medium text-gray-500 text-center">
                       After
                     </Text>
-                    <Image
-                      className="flex-1 rounded-xl"
-                      source={{ uri: result }}
-                      contentFit="cover"
+                    <SkeletonImage
+                      className="flex-1 rounded-xl overflow-hidden"
+                      uri={result}
                     />
                   </View>
                 </View>
@@ -211,15 +220,22 @@ const AppScreen: React.FC = () => {
               placeholderTextColor="#d1d5db"
             />
             <Pressable
-              className="p-3 bg-black rounded-full shadow-lg shadow-black/50 disabled:bg-black/50"
+              className="relative p-3 rounded-full shadow-lg shadow-black/50 overflow-hidden"
               onPress={handleImage}
-              disabled={
-                isEmpty(selfie) || prompt.trim().length == 0 || isLoading
-              }
             >
+              <LinearGradient
+                className="absolute inset-0"
+                colors={["#C4A8AA", "#322626"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              />
               {isLoading ? (
                 <View className="flex flex-row items-center justify-center gap-x-1.5">
-                  <ActivityIndicator color="white" />
+                  {!isDarkMode ? (
+                    <ActivityIndicator color="white" />
+                  ) : (
+                    <ActivityIndicator color="black" />
+                  )}
                   <Text className="text-lg font-bold text-white text-center">
                     Processing...
                   </Text>
