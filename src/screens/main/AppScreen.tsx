@@ -231,11 +231,7 @@ const AppScreen: React.FC = () => {
               />
               {isLoading ? (
                 <View className="flex flex-row items-center justify-center gap-x-1.5">
-                  {!isDarkMode ? (
-                    <ActivityIndicator color="white" />
-                  ) : (
-                    <ActivityIndicator color="black" />
-                  )}
+                  <ActivityIndicator color="white" />
                   <Text className="text-lg font-bold text-white text-center">
                     Processing...
                   </Text>
