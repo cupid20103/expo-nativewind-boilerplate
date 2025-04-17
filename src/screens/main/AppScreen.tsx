@@ -16,7 +16,6 @@ import Feather from "@expo/vector-icons/Feather";
 import { HairStyle, SkeletonImage, UploadModal } from "@/components";
 import { hairStyleData } from "@/lib/constant";
 import { cn, imageToBase64, isEmpty, toast } from "@/lib/utils";
-import { EXPO_PUBLIC_API_URI } from "@/config/env";
 
 const AppScreen: React.FC = () => {
   const [selfie, setSelfie] = useState<string | undefined>(undefined);
@@ -85,7 +84,7 @@ const AppScreen: React.FC = () => {
       } else {
         const input_image = selfie && (await imageToBase64(selfie));
 
-        const response = await fetch(`${EXPO_PUBLIC_API_URI}/hair`, {
+        const response = await fetch("/api/hair", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

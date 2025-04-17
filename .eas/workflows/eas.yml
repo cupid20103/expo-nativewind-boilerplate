@@ -1,4 +1,4 @@
-name: Build Workflows
+name: Hosting & Build Workflows
 
 on:
   push:
