@@ -1,0 +1,63 @@
+name: Expo Workflows
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  # Web Hosting
+  deploy:
+    type: deploy
+    name: Deploy
+    environment: production
+    params:
+      prod: true
+  # iOS Builds
+  ios_production:
+    name: 🛠 iOS Production
+    type: build
+    if: $EAS_BRANCH == "main"
+    params:
+      platform: ios
+      profile: production
+
+  ios_preview:
+    name: 🔍 iOS Preview
+    type: build
+    if: $EAS_BRANCH == "staging"
+    params:
+      platform: ios
+      profile: preview
+
+  ios_development:
+    name: 🧪 iOS Development
+    type: build
+    if: $EAS_BRANCH == "develop"
+    params:
+      platform: ios
+      profile: ios-simulator
+
+  # Android Builds
+  android_production:
+    name: 🛠 Android Production
+    type: build
+    if: $EAS_BRANCH == "main"
+    params:
+      platform: android
+      profile: production
+
+  android_preview:
+    name: 🔍 Android Preview
+    type: build
+    if: $EAS_BRANCH == "staging"
+    params:
+      platform: android
+      profile: preview
+
+  android_development:
+    name: 🧪 Android Development
+    type: build
+    if: $EAS_BRANCH == "develop"
+    params:
+      platform: android
+      profile: development
