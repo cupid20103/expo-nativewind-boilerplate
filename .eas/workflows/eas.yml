@@ -1,4 +1,4 @@
-name: Expo Workflows
+name: Build Workflows
 
 on:
   push:
