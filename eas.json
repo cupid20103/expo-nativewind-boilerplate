@@ -15,10 +15,14 @@
       }
     },
     "preview": {
-      "distribution": "internal"
+      "developmentClient": false,
+      "distribution": "internal",
+      "channel": "staging"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "developmentClient": false,
+      "channel": "production"
     }
   },
   "submit": {

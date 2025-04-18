@@ -12,6 +12,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
+    bundleIdentifier: "com.cupid20103.HairMagic",
   },
   android: {
     adaptiveIcon: {
@@ -28,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   owner: "cupid20103",
   plugins: [
     "expo-font",
-    ["expo-router", { origin: "http://hairmagic.expo.app" }],
+    ["expo-router", { origin: "https://hair-magic.expo.app" }],
     [
       "expo-image-picker",
       {
