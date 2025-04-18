@@ -1,0 +1,20 @@
+name: Development Build Workflows
+
+on:
+  push:
+    branches: ["develop"]
+
+jobs:
+  # ios_development:
+  #   name: 🧪 iOS Development
+  #   type: build
+  #   params:
+  #     platform: ios
+  #     profile: ios-simulator
+
+  android_development:
+    name: 🧪 Android Development
+    type: build
+    params:
+      platform: android
+      profile: development

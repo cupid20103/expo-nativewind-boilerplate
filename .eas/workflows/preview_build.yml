@@ -1,0 +1,20 @@
+name: Preview Build Workflows
+
+on:
+  push:
+    branches: ["staging"]
+
+jobs:
+  # ios_preview:
+  #   name: 🔍 iOS Preview
+  #   type: build
+  #   params:
+  #     platform: ios
+  #     profile: preview
+
+  android_preview:
+    name: 🔍 Android Preview
+    type: build
+    params:
+      platform: android
+      profile: preview
