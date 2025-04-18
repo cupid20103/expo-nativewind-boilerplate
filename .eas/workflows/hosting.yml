@@ -1,0 +1,13 @@
+name: Hosting Workflows
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  deploy:
+    type: deploy
+    name: Deploy
+    environment: production
+    params:
+      prod: true
