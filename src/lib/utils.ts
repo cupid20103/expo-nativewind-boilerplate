@@ -1,7 +1,9 @@
 import Toast from "react-native-root-toast";
 import * as FileSystem from "expo-file-system";
+import Constants from "expo-constants";
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
+import { APP_ENV } from "@/config/env";
 import { MessageType } from "@/types/utils";
 
 export const cn = (...inputs: ClassValue[]) => {
@@ -56,4 +58,19 @@ export const imageToBase64 = async (uri: string) => {
     console.error("Error converting image to Base64: ", error);
     throw error;
   }
+};
+
+export const generateAPIURL = (relativePath: string) => {
+  const API_URL = " https://hair-magic.expo.app";
+
+  const origin =
+    Constants?.experienceUrl?.replace("exp://", "http://") || API_URL;
+
+  const path = relativePath.startsWith("/") ? relativePath : `/${relativePath}`;
+
+  if (APP_ENV === "development") {
+    return origin?.concat(path);
+  }
+
+  return API_URL.concat(path);
 };
