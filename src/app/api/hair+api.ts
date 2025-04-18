@@ -1,4 +1,8 @@
-import { EXPO_PUBLIC_REPLICATE_API_TOKEN } from "@/config/env";
+import { REPLICATE_API_TOKEN } from "@/config/env";
+
+export function GET(request: Request) {
+  return Response.json({ hello: "world" });
+}
 
 export async function POST(req: Request) {
   try {
@@ -16,7 +20,7 @@ export async function POST(req: Request) {
     const response = await fetch("https://api.replicate.com/v1/predictions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${EXPO_PUBLIC_REPLICATE_API_TOKEN}`,
+        Authorization: `Bearer ${REPLICATE_API_TOKEN}`,
         Prefer: "wait",
         "Content-Type": "application/json",
       },
@@ -35,7 +39,7 @@ export async function POST(req: Request) {
         `https://api.replicate.com/v1/predictions/${predictionID}`,
         {
           headers: {
-            Authorization: `Bearer ${EXPO_PUBLIC_REPLICATE_API_TOKEN}`,
+            Authorization: `Bearer ${REPLICATE_API_TOKEN}`,
           },
         }
       );
