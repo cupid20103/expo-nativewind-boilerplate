@@ -36,7 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-router",
       {
-        origin: "https://hair-magic.expo.app",
+        origin: "https://hair-magic-mvp.expo.app",
       },
     ],
     [
@@ -64,7 +64,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     router: {
-      origin: "https://hair-magic.expo.app",
+      origin: "https://hair-magic-mvp.expo.app",
     },
     eas: {
       projectId: "20e6e195-3264-4ef7-9197-c0cd692070c0",
