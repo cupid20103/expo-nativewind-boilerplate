@@ -1,0 +1,20 @@
+name: Production Build Workflows
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  # ios_production:
+  #   name: 🛠 iOS Production
+  #   type: build
+  #   params:
+  #     platform: ios
+  #     profile: production
+
+  android_production:
+    name: 🛠 Android Production
+    type: build
+    params:
+      platform: android
+      profile: production
