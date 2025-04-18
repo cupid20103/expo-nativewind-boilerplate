@@ -13,12 +13,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: "com.cupid20103.HairMagic",
+    infoPlist: {
+      ITSAppUsesNonExemptEncryption: false,
+    },
   },
   android: {
     adaptiveIcon: {
       foregroundImage: "./src/assets/images/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
+    permissions: ["android.permission.RECORD_AUDIO"],
     package: "com.cupid20103.HairMagic",
   },
   web: {
@@ -29,7 +33,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   owner: "cupid20103",
   plugins: [
     "expo-font",
-    ["expo-router", { origin: "https://hair-magic.expo.app" }],
+    [
+      "expo-router",
+      {
+        origin: "https://hair-magic.expo.app",
+      },
+    ],
     [
       "expo-image-picker",
       {
@@ -55,10 +64,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     router: {
-      origin: false,
+      origin: "https://hair-magic.expo.app",
     },
     eas: {
-      projectId: "c0d839a1-2009-44f5-aef1-5c16f78b19c6",
+      projectId: "20e6e195-3264-4ef7-9197-c0cd692070c0",
     },
   },
 });

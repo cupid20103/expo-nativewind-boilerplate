@@ -14,29 +14,29 @@ jobs:
       prod: true
 
   # iOS Builds
-  ios_production:
-    name: 🛠 iOS Production
-    type: build
-    if: ${{ github.ref_name == 'main' }}
-    params:
-      platform: ios
-      profile: production
+  # ios_production:
+  #   name: 🛠 iOS Production
+  #   type: build
+  #   if: ${{ github.ref_name == 'main' }}
+  #   params:
+  #     platform: ios
+  #     profile: production
 
-  ios_preview:
-    name: 🔍 iOS Preview
-    type: build
-    if: ${{ github.ref_name == 'staging' }}
-    params:
-      platform: ios
-      profile: preview
+  # ios_preview:
+  #   name: 🔍 iOS Preview
+  #   type: build
+  #   if: ${{ github.ref_name == 'staging' }}
+  #   params:
+  #     platform: ios
+  #     profile: preview
 
-  ios_development:
-    name: 🧪 iOS Development
-    type: build
-    if: ${{ github.ref_name == 'develop' }}
-    params:
-      platform: ios
-      profile: ios-simulator
+  # ios_development:
+  #   name: 🧪 iOS Development
+  #   type: build
+  #   if: ${{ github.ref_name == 'develop' }}
+  #   params:
+  #     platform: ios
+  #     profile: ios-simulator
 
   # Android Builds
   android_production:
