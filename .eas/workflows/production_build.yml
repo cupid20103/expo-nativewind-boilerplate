@@ -5,12 +5,12 @@ on:
     branches: ["main"]
 
 jobs:
-  # ios_production:
-  #   name: 🛠 iOS Production
-  #   type: build
-  #   params:
-  #     platform: ios
-  #     profile: production
+  ios_production:
+    name: 🛠 iOS Production
+    type: build
+    params:
+      platform: ios
+      profile: production
 
   android_production:
     name: 🛠 Android Production

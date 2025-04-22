@@ -5,12 +5,12 @@ on:
     branches: ["develop"]
 
 jobs:
-  # ios_development:
-  #   name: 🧪 iOS Development
-  #   type: build
-  #   params:
-  #     platform: ios
-  #     profile: ios-simulator
+  ios_development:
+    name: 🧪 iOS Development
+    type: build
+    params:
+      platform: ios
+      profile: ios-simulator
 
   android_development:
     name: 🧪 Android Development
